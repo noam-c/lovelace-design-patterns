@@ -1,0 +1,15 @@
+{
+  "name": "lovelace-rps",
+  "version": "1.0.0",
+  "description": "Lexer/tokenizer for a rudimentary language",
+  "scripts": {
+    "build": "npx tsc index.ts",
+    "start": "npm run build && node index.js"
+  },
+  "author": "Noam Chitayat",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^17.0.31",
+    "typescript": "^4.6.4"
+  }
+}
