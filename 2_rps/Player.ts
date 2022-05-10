@@ -5,9 +5,9 @@ import GameController from './GameController';
 export default class Player {
     // Get the player's move -- relies on the GameController
     // to handle user interaction details
-    public getMove(): Move {
-        const nextMove = GameController.getInstance().requestPlayerMove();
-        GameController.getInstance().reportPlayerChoice(nextMove);
+    public getMove(game: GameController): Move {
+        const nextMove = game.requestPlayerMove();
+        game.reportPlayerChoice(nextMove);
         return nextMove;
     }
 }

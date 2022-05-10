@@ -12,23 +12,9 @@ export default class GameController {
     private player: Player;
     private cpu: EasyCpu;
 
-    // The singular instance of the GameController
-    private static singletonInstance: GameController;
-
-    // Provides global access to the only GameController
-    // instance. If there is no GameController instance yet,
-    // this function will create it.
-    static getInstance(): GameController {
-        if (!GameController.singletonInstance) {
-            GameController.singletonInstance = new GameController();
-        }
-
-        return GameController.singletonInstance;
-    }
-
     // Constructor is private so only one GameController can be made
     // and only using the getInstance() function above.
-    private constructor() {
+    public constructor() {
         this.playerPrompt = PromptSync({sigint: true});
 
         this.player = new Player();
@@ -38,8 +24,8 @@ export default class GameController {
     // Runs the game
     public run(): void {
         while (true) {
-            const playerMove = this.player.getMove();
-            const cpuMove = this.cpu.getMove();
+            const playerMove = this.player.getMove(this);
+            const cpuMove = this.cpu.getMove(this);
 
             if (cpuMove === whatBeats(playerMove)) {
                 console.log('You lose');

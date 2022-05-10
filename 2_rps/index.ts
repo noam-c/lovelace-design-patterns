@@ -1,3 +1,4 @@
 import GameController from './GameController';
 
-GameController.getInstance().run();
+let game = new GameController();
+game.run();
