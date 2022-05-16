@@ -1,5 +1,5 @@
 import * as PromptSync from 'prompt-sync';
-import EasyCpu from './easyCpu';
+import ICpuPlayer from './ICpuPlayer';
 import { Move, whatBeats } from './Move';
 import Player from './player';
 
@@ -10,15 +10,15 @@ export default class GameController {
     private playerPrompt: PromptSync.Prompt;
 
     private player: Player;
-    private cpu: EasyCpu;
+    private cpu: ICpuPlayer;
 
     // Constructor is private so only one GameController can be made
     // and only using the getInstance() function above.
-    public constructor() {
+    public constructor(cpu: ICpuPlayer) {
         this.playerPrompt = PromptSync({sigint: true});
 
         this.player = new Player();
-        this.cpu = new EasyCpu();
+        this.cpu = cpu;
     }
 
     // Runs the game
