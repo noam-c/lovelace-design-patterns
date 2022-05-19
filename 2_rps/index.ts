@@ -1,5 +1,12 @@
-import RandomCpu from './randomCpu';
 import GameController from './GameController';
+import ConsoleUI from './ConsoleUI';
+import Achievements from './Achievements';
+import EasyCpu from './EasyCpu';
 
-let game = new GameController(new RandomCpu());
+let ui = new ConsoleUI();
+let achievements = new Achievements();
+
+let game = new GameController(new EasyCpu());
+game.registerObserver(ui);
+game.registerObserver(achievements);
 game.run();

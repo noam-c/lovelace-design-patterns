@@ -7,8 +7,6 @@ export default class RandomCpu implements ICpuPlayer {
     getMove(game: GameController): Move {
         const moves = Object.values(Move);
         const randomIndex = Math.floor(Math.random() * moves.length);
-        const nextMove = moves[randomIndex];
-        game.reportCpuChoice(nextMove);
-        return nextMove;
+        return moves[randomIndex];
     }
 };

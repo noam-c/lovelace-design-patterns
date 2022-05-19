@@ -7,7 +7,6 @@ export default class Player {
     // to handle user interaction details
     public getMove(game: GameController): Move {
         const nextMove = game.requestPlayerMove();
-        game.reportPlayerChoice(nextMove);
         return nextMove;
     }
 }

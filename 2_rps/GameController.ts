@@ -1,5 +1,6 @@
 import * as PromptSync from 'prompt-sync';
 import ICpuPlayer from './ICpuPlayer';
+import GameObserver from './GameObserver';
 import { Move, whatBeats } from './Move';
 import Player from './player';
 
@@ -12,6 +13,8 @@ export default class GameController {
     private player: Player;
     private cpu: ICpuPlayer;
 
+    private observers: GameObserver[];
+
     // Constructor is private so only one GameController can be made
     // and only using the getInstance() function above.
     public constructor(cpu: ICpuPlayer) {
@@ -19,6 +22,12 @@ export default class GameController {
 
         this.player = new Player();
         this.cpu = cpu;
+
+        this.observers = [];
+    }
+
+    public registerObserver(observer: GameObserver) {
+        this.observers.push(observer);
     }
 
     // Runs the game
@@ -27,12 +36,15 @@ export default class GameController {
             const playerMove = this.player.getMove(this);
             const cpuMove = this.cpu.getMove(this);
 
+            this.observers.forEach(o => o.notifyMove('Player', playerMove));
+            this.observers.forEach(o => o.notifyMove('CPU', cpuMove));
+
             if (cpuMove === whatBeats(playerMove)) {
-                console.log('You lose');
+                this.observers.forEach(o => o.notifyCpuWin());
             } else if (playerMove === whatBeats(cpuMove)) {
-                console.log('You win');
+                this.observers.forEach(o => o.notifyPlayerWin());
             } else {
-                console.log("It's a tie");
+                this.observers.forEach(o => o.notifyTie());
             }
         }
     }
@@ -51,15 +63,5 @@ export default class GameController {
                 console.log('Invalid move');
             }
         }
-    }
-
-    // Confirms the player's move to the player
-    public reportPlayerChoice(move: Move): void {
-        console.log(`Player chose ${move}`)
-    }
-
-    // Reports the CPU's move to the player
-    public reportCpuChoice(move: Move): void {
-        console.log(`CPU chose ${move}`)
     }
 };
